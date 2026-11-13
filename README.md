@@ -1,6 +1,6 @@
-# Julve_AIO
+# Julve AIO
 
-Aplicación Todo-en-Uno de acceso rápido para **Flipper Zero** diseñada para organizar y ejecutar señales y mandos previamente guardados desde una única interfaz, sin necesidad de ir cambiando entre las aplicaciones nativas de Sub-GHz, IR, RFID, NFC, iButton o Picopass.
+Aplicación Todo-en-Uno de acceso rápido para **Flipper Zero** desarrollada por [@DonJulve](https://github.com/DonJulve), diseñada para organizar y ejecutar señales y mandos previamente guardados desde una única interfaz, sin necesidad de ir cambiando entre las aplicaciones nativas de Sub-GHz, IR, RFID, NFC, iButton o Picopass.
 
 > La aplicación no incluye funciones de captura o grabación: utiliza archivos previamente guardados en la tarjeta SD mediante las aplicaciones oficiales del Flipper Zero.
 

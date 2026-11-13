@@ -2,8 +2,8 @@
 
 #include <flipper_format/flipper_format.h>
 
-// Julve_AIO Settings File Info
-#define JULVE_AIO_SETTINGS_FILE_TYPE    "Julve_AIO Settings File"
+// Julve AIO Settings File Info
+#define JULVE_AIO_SETTINGS_FILE_TYPE    "Julve AIO Settings File"
 #define JULVE_AIO_SETTINGS_FILE_VERSION 1
 
 void julve_aio_set_default_settings(App* app) {
@@ -40,7 +40,8 @@ void julve_aio_load_settings(App* app) {
             break;
         }
 
-        if((!strcmp(furi_string_get_cstr(temp_str), JULVE_AIO_SETTINGS_FILE_TYPE)) &&
+        if(((!strcmp(furi_string_get_cstr(temp_str), JULVE_AIO_SETTINGS_FILE_TYPE)) ||
+            (!strcmp(furi_string_get_cstr(temp_str), "Julve_AIO Settings File"))) &&
            (temp_data32 == JULVE_AIO_SETTINGS_FILE_VERSION)) {
         } else {
             FURI_LOG_E(TAG, "SETTINGS: Type or version mismatch");

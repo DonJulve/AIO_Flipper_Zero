@@ -115,7 +115,7 @@ void app_free(App* app) {
 // FAP Entry Point
 int32_t julve_aio_app(void* p) {
     UNUSED(p);
-    FURI_LOG_I(TAG, "Julve_AIO starting");
+    FURI_LOG_I(TAG, "Julve AIO starting");
 
     size_t free_start = memmgr_get_free_heap();
 

@@ -15,7 +15,7 @@ void action_ql_resolve(
         if(!storage_file_open(
                file_link, furi_string_get_cstr(action_path), FSAM_READ, FSOM_OPEN_EXISTING)) {
             ACTION_SET_ERROR(
-                "Julve_AIO Link: Failed to open file %s", furi_string_get_cstr(action_path));
+                "Julve AIO Link: Failed to open file %s", furi_string_get_cstr(action_path));
             break;
         }
 
@@ -34,12 +34,12 @@ void action_ql_resolve(
 
         if(bytes_read != file_size) {
             ACTION_SET_ERROR(
-                "Julve_AIO Link: Error reading link file %s", furi_string_get_cstr(action_path));
+                "Julve AIO Link: Error reading link file %s", furi_string_get_cstr(action_path));
             break;
         }
         if(!storage_file_exists(app->storage, furi_string_get_cstr(new_path))) {
             ACTION_SET_ERROR(
-                "Julve_AIO Link: Linked file does not exist! %s", furi_string_get_cstr(new_path));
+                "Julve AIO Link: Linked file does not exist! %s", furi_string_get_cstr(new_path));
             break;
         }
     } while(false);
@@ -52,13 +52,13 @@ void action_tx(void* context, Item* item, FuriString* error) {
 
     FuriString* path = furi_string_alloc_set(item->path);
     if(item->is_link) {
-        // This is a Julve_AIO link, open the file and pull the real filename
+        // This is a Julve AIO link, open the file and pull the real filename
         action_ql_resolve(context, item->path, path, error);
         if(furi_string_size(error)) {
             furi_string_free(path);
             return;
         }
-        FURI_LOG_I(TAG, "Resolved Julve_AIO link file to: %s", furi_string_get_cstr(path));
+        FURI_LOG_I(TAG, "Resolved Julve AIO link file to: %s", furi_string_get_cstr(path));
     }
 
     if(!strcmp(item->ext, ".sub")) {

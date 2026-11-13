@@ -17,11 +17,12 @@
 #include "views/subghz_transmitter.h"
 #include "item.h"
 
-#define JULVE_AIO_NAME "Julve_AIO"
+#define JULVE_AIO_NAME "Julve AIO"
 #define JULVE_AIO_ABOUT                               \
     "Quick Action remote control\nv" FAP_VERSION "\n" \
-    "Julve_AIO"
-#define TAG "Julve_AIO" // log statement id
+    "Julve AIO\n"                                     \
+    "GitHub: @DonJulve"
+#define TAG "Julve AIO" // log statement id
 
 // Location of our actions and folders
 #define JULVE_AIO_SETTINGS_FILENAME ".julve_aio.conf"

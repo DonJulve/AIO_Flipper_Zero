@@ -1,4 +1,4 @@
-// Methods for Julve_AIO Playlist transmission
+// Methods for Julve AIO Playlist transmission
 
 #include <toolbox/stream/stream.h>
 #include <toolbox/stream/file_stream.h>

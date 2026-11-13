@@ -2,7 +2,7 @@
 
 #include "julve_aio.h"
 
-/** Set the default Settings for Julve_AIO */
+/** Set the default Settings for Julve AIO */
 void julve_aio_set_default_settings(App* app);
 
 /** Load the Settings from the .julve_aio.conf file. If not found,
