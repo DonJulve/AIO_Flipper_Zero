@@ -34,6 +34,30 @@ App* app_alloc() {
         QView_SubGhzTransmitter,
         subghz_transmitter_view_get_view(app->subghz_transmitter));
 
+    app->nfc_emulate_view = nfc_emulate_view_alloc();
+    view_dispatcher_add_view(
+        app->view_dispatcher,
+        QView_NfcEmulate,
+        nfc_emulate_view_get_view(app->nfc_emulate_view));
+
+    app->rfid_emulate_view = rfid_emulate_view_alloc();
+    view_dispatcher_add_view(
+        app->view_dispatcher,
+        QView_RfidEmulate,
+        rfid_emulate_view_get_view(app->rfid_emulate_view));
+
+    app->ibutton_emulate_view = ibutton_emulate_view_alloc();
+    view_dispatcher_add_view(
+        app->view_dispatcher,
+        QView_iButtonEmulate,
+        ibutton_emulate_view_get_view(app->ibutton_emulate_view));
+
+    app->picopass_emulate_view = picopass_emulate_view_alloc();
+    view_dispatcher_add_view(
+        app->view_dispatcher,
+        QView_PicopassEmulate,
+        picopass_emulate_view_get_view(app->picopass_emulate_view));
+
     // App settings
     app->vil_settings = variable_item_list_alloc();
     view_dispatcher_add_view(
@@ -68,6 +92,10 @@ App* app_alloc() {
     app->subghz_txrx = NULL;
     app->subghz_scene_state = NULL;
     app->ir_remote_state = NULL;
+    app->nfc_scene_state = NULL;
+    app->rfid_scene_state = NULL;
+    app->ibutton_scene_state = NULL;
+    app->picopass_scene_state = NULL;
 
     return app;
 }
@@ -86,6 +114,10 @@ void app_free(App* app) {
     view_dispatcher_remove_view(app->view_dispatcher, QView_ActionMenu);
     view_dispatcher_remove_view(app->view_dispatcher, QView_ButtonMenu);
     view_dispatcher_remove_view(app->view_dispatcher, QView_SubGhzTransmitter);
+    view_dispatcher_remove_view(app->view_dispatcher, QView_NfcEmulate);
+    view_dispatcher_remove_view(app->view_dispatcher, QView_RfidEmulate);
+    view_dispatcher_remove_view(app->view_dispatcher, QView_iButtonEmulate);
+    view_dispatcher_remove_view(app->view_dispatcher, QView_PicopassEmulate);
     view_dispatcher_remove_view(app->view_dispatcher, QView_Settings);
     view_dispatcher_remove_view(app->view_dispatcher, QView_SubMenu);
     view_dispatcher_remove_view(app->view_dispatcher, QView_TextInput);
@@ -94,6 +126,10 @@ void app_free(App* app) {
     action_menu_free(app->action_menu);
     button_menu_free(app->button_menu);
     subghz_transmitter_view_free(app->subghz_transmitter);
+    nfc_emulate_view_free(app->nfc_emulate_view);
+    rfid_emulate_view_free(app->rfid_emulate_view);
+    ibutton_emulate_view_free(app->ibutton_emulate_view);
+    picopass_emulate_view_free(app->picopass_emulate_view);
     variable_item_list_free(app->vil_settings);
     submenu_free(app->sub_menu);
     text_input_free(app->text_input);

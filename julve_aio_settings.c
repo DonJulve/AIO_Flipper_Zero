@@ -16,6 +16,7 @@ void julve_aio_set_default_settings(App* app) {
     app->settings.ibutton_duration = 1000;
     app->settings.picopass_duration = 1000;
     app->settings.ir_use_ext_module = false;
+    app->settings.subghz_use_ext_module = false;
     app->settings.show_hidden = false;
 }
 
@@ -109,6 +110,12 @@ void julve_aio_load_settings(App* app) {
             app->settings.ir_use_ext_module = temp_data32 == 1;
         }
 
+        if(!flipper_format_read_uint32(fff_settings, "SubGhz Ext Module", &temp_data32, 1)) {
+            FURI_LOG_W(TAG, "SETTINGS: Missing 'SubGhz Ext Module'");
+        } else {
+            app->settings.subghz_use_ext_module = temp_data32 == 1;
+        }
+
         if(!flipper_format_read_uint32(fff_settings, "Show Hidden", &temp_data32, 1)) {
             FURI_LOG_W(TAG, "SETTINGS: Missing 'Show Hidden'");
         } else {
@@ -184,6 +191,11 @@ void julve_aio_save_settings(App* app) {
         temp_data32 = app->settings.ir_use_ext_module ? 1 : 0;
         if(!flipper_format_write_uint32(fff_settings, "IR Ext Module", &temp_data32, 1)) {
             FURI_LOG_E(TAG, "SETTINGS: Failed to write 'IR Ext Module'");
+            break;
+        }
+        temp_data32 = app->settings.subghz_use_ext_module ? 1 : 0;
+        if(!flipper_format_write_uint32(fff_settings, "SubGhz Ext Module", &temp_data32, 1)) {
+            FURI_LOG_E(TAG, "SETTINGS: Failed to write 'SubGhz Ext Module'");
             break;
         }
         temp_data32 = app->settings.show_hidden ? 1 : 0;

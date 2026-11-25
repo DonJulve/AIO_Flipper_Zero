@@ -9,6 +9,10 @@
 #include "scene_action_create_group.h"
 #include "scene_ir_remote.h"
 #include "scene_subghz_transmitter.h"
+#include "scene_nfc_emulate.h"
+#include "scene_rfid_emulate.h"
+#include "scene_ibutton_emulate.h"
+#include "scene_picopass_emulate.h"
 #include "scene_about.h"
 
 // define handler callbacks - order must match appScenes enum!
@@ -20,6 +24,10 @@ void (*const app_on_enter_handlers[])(void* context) = {
     scene_action_create_group_on_enter,
     scene_ir_remote_on_enter,
     scene_subghz_transmitter_on_enter,
+    scene_nfc_emulate_on_enter,
+    scene_rfid_emulate_on_enter,
+    scene_ibutton_emulate_on_enter,
+    scene_picopass_emulate_on_enter,
     scene_about_on_enter,
 };
 bool (*const app_on_event_handlers[])(void* context, SceneManagerEvent event) = {
@@ -30,6 +38,10 @@ bool (*const app_on_event_handlers[])(void* context, SceneManagerEvent event) = 
     scene_action_create_group_on_event,
     scene_ir_remote_on_event,
     scene_subghz_transmitter_on_event,
+    scene_nfc_emulate_on_event,
+    scene_rfid_emulate_on_event,
+    scene_ibutton_emulate_on_event,
+    scene_picopass_emulate_on_event,
     scene_about_on_event,
 };
 void (*const app_on_exit_handlers[])(void* context) = {
@@ -40,6 +52,10 @@ void (*const app_on_exit_handlers[])(void* context) = {
     scene_action_create_group_on_exit,
     scene_ir_remote_on_exit,
     scene_subghz_transmitter_on_exit,
+    scene_nfc_emulate_on_exit,
+    scene_rfid_emulate_on_exit,
+    scene_ibutton_emulate_on_exit,
+    scene_picopass_emulate_on_exit,
     scene_about_on_exit,
 };
 

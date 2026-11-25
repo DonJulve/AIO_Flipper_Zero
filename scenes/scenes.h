@@ -9,6 +9,10 @@ typedef enum {
     QScene_ActionCreateGroup,
     QScene_IRRemote,
     QScene_SubGhzTransmitter,
+    QScene_NfcEmulate,
+    QScene_RfidEmulate,
+    QScene_iButtonEmulate,
+    QScene_PicopassEmulate,
     QScene_About,
     QScene_count
 } appScenes;
@@ -21,6 +25,10 @@ typedef enum {
     QView_Popup, // About screen
     QView_ButtonMenu, // IR Remote screen
     QView_SubGhzTransmitter, // SubGHz Rolling Code info & TX screen
+    QView_NfcEmulate, // NFC Emulation screen
+    QView_RfidEmulate, // RFID Emulation screen
+    QView_iButtonEmulate, // iButton Emulation screen
+    QView_PicopassEmulate, // Picopass Emulation screen
 } appView;
 
 typedef enum {

@@ -65,15 +65,11 @@ SubGhzTxRx* subghz_txrx_alloc(void) {
         instance->worker, (SubGhzWorkerPairCallback)subghz_receiver_decode);
     subghz_worker_set_context(instance->worker, instance->receiver);
 
-    //set default device External
+    //set default device Internal
     subghz_devices_init();
+    instance->radio_device = subghz_devices_get_by_name(SUBGHZ_DEVICE_CC1101_INT_NAME);
     instance->radio_device_type = SubGhzRadioDeviceTypeInternal;
-    instance->radio_device_type =
-        subghz_txrx_radio_device_set(instance, SubGhzRadioDeviceTypeExternalCC1101);
-    FURI_LOG_I(
-        TAG,
-        "radio device type = %s",
-        instance->radio_device_type == SubGhzRadioDeviceTypeInternal ? "Internal" : "External");
+    FURI_LOG_I(TAG, "radio device type = Internal");
 
     return instance;
 }
@@ -557,6 +553,7 @@ bool subghz_txrx_radio_device_is_external_connected(SubGhzTxRx* instance, const 
 
     if(!is_otg_enabled) {
         subghz_txrx_radio_device_power_on(instance);
+        furi_delay_ms(10);
     }
 
     const SubGhzDevice* device = subghz_devices_get_by_name(name);

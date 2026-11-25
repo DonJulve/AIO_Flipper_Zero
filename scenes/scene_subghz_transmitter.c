@@ -49,6 +49,9 @@ static void scene_subghz_transmitter_update_view(App* app) {
         subghz_protocol_decoder_base_get_string(decoder, key_info);
     }
     subghz_txrx_get_frequency_and_modulation(app->subghz_txrx, frequency, modulation);
+    if(subghz_txrx_radio_device_get(app->subghz_txrx) == SubGhzRadioDeviceTypeExternalCC1101) {
+        furi_string_cat(modulation, " [Ext]");
+    }
     bool can_tx = subghz_txrx_protocol_is_transmittable(app->subghz_txrx, false);
 
     subghz_transmitter_view_set_data(

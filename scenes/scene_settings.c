@@ -23,28 +23,6 @@ static const uint32_t layout_value[2] = {JULVE_AIO_APP_PORTRAIT, JULVE_AIO_APP_L
 static const char* const show_offon_text[2] = {"OFF", "ON"};
 static const uint32_t show_offon_value[2] = {false, true};
 
-#define V_DURATION_COUNT 8
-static const char* const duration_text[V_DURATION_COUNT] = {
-    "500 ms",
-    "1 sec",
-    "1.5 sec",
-    "2 sec",
-    "2.5 sec",
-    "3 sec",
-    "5 sec",
-    "10 sec",
-};
-static const uint32_t duration_value[V_DURATION_COUNT] = {
-    500,
-    1000,
-    1500,
-    2000,
-    2500,
-    3000,
-    5000,
-    10000,
-};
-
 static const char* const disabled_enabled_text[2] = {"Disabled", "Enabled"};
 static const uint32_t disabled_enabled_value[2] = {false, true};
 
@@ -69,39 +47,11 @@ static void scene_settings_show_headers_changed(VariableItem* item) {
     app->settings.show_headers = show_offon_value[index];
 }
 
-static void scene_settings_subghz_duration_changed(VariableItem* item) {
+static void scene_settings_subghz_ext_changed(VariableItem* item) {
     App* app = variable_item_get_context(item);
     uint8_t index = variable_item_get_current_value_index(item);
-    variable_item_set_current_value_text(item, duration_text[index]);
-    app->settings.subghz_duration = duration_value[index];
-}
-
-static void scene_settings_rfid_duration_changed(VariableItem* item) {
-    App* app = variable_item_get_context(item);
-    uint8_t index = variable_item_get_current_value_index(item);
-    variable_item_set_current_value_text(item, duration_text[index]);
-    app->settings.rfid_duration = duration_value[index];
-}
-
-static void scene_settings_nfc_duration_changed(VariableItem* item) {
-    App* app = variable_item_get_context(item);
-    uint8_t index = variable_item_get_current_value_index(item);
-    variable_item_set_current_value_text(item, duration_text[index]);
-    app->settings.nfc_duration = duration_value[index];
-}
-
-static void scene_settings_ibutton_duration_changed(VariableItem* item) {
-    App* app = variable_item_get_context(item);
-    uint8_t index = variable_item_get_current_value_index(item);
-    variable_item_set_current_value_text(item, duration_text[index]);
-    app->settings.ibutton_duration = duration_value[index];
-}
-
-static void scene_settings_picopascene_settings_duration_changed(VariableItem* item) {
-    App* app = variable_item_get_context(item);
-    uint8_t index = variable_item_get_current_value_index(item);
-    variable_item_set_current_value_text(item, duration_text[index]);
-    app->settings.picopass_duration = duration_value[index];
+    variable_item_set_current_value_text(item, disabled_enabled_text[index]);
+    app->settings.subghz_use_ext_module = disabled_enabled_value[index];
 }
 
 static void scene_settings_ir_ext_changed(VariableItem* item) {
@@ -200,57 +150,13 @@ void scene_settings_on_enter(void* context) {
     scene_settings_add_value_item(
         vil,
         &item_index,
-        "SubGhz Duration",
-        V_DURATION_COUNT,
-        scene_settings_subghz_duration_changed,
+        "SubGHz Ext Module",
+        2,
+        scene_settings_subghz_ext_changed,
         app,
-        app->settings.subghz_duration,
-        duration_value,
-        duration_text);
-
-    scene_settings_add_value_item(
-        vil,
-        &item_index,
-        "RFID Duration",
-        V_DURATION_COUNT,
-        scene_settings_rfid_duration_changed,
-        app,
-        app->settings.rfid_duration,
-        duration_value,
-        duration_text);
-
-    scene_settings_add_value_item(
-        vil,
-        &item_index,
-        "NFC Duration",
-        V_DURATION_COUNT,
-        scene_settings_nfc_duration_changed,
-        app,
-        app->settings.nfc_duration,
-        duration_value,
-        duration_text);
-
-    scene_settings_add_value_item(
-        vil,
-        &item_index,
-        "iButton Duration",
-        V_DURATION_COUNT,
-        scene_settings_ibutton_duration_changed,
-        app,
-        app->settings.ibutton_duration,
-        duration_value,
-        duration_text);
-
-    scene_settings_add_value_item(
-        vil,
-        &item_index,
-        "Picopass Duration",
-        V_DURATION_COUNT,
-        scene_settings_picopascene_settings_duration_changed,
-        app,
-        app->settings.picopass_duration,
-        duration_value,
-        duration_text);
+        app->settings.subghz_use_ext_module,
+        disabled_enabled_value,
+        disabled_enabled_text);
 
     scene_settings_add_value_item(
         vil,

@@ -59,7 +59,7 @@ typedef enum {
     PicopassListenerStateSelected,
 } PicopassListenerState;
 
-typedef struct {
+struct PicopassEmulator {
     Nfc* nfc;
     PicopassData* data;
     PicopassListenerState state;
@@ -67,7 +67,7 @@ typedef struct {
     BitBuffer* tmp_buffer;
     uint8_t key_block_num;
     LoclassState_t cipher_state;
-} PicopassEmulator;
+};
 
 // Helper to convert hex char to nibble
 static bool hex_char_to_uint8(char hi, char lo, uint8_t* out) {
@@ -398,7 +398,7 @@ static NfcCommand picopass_listener_callback(NfcEvent event, void* context) {
     return NfcCommandContinue;
 }
 
-static PicopassEmulator*
+PicopassEmulator*
     action_picopass_emulator_start(void* context, const char* path, FuriString* error) {
     App* app = context;
 
@@ -437,7 +437,7 @@ static PicopassEmulator*
     return emu;
 }
 
-static void action_picopass_emulator_stop(PicopassEmulator* emu) {
+void action_picopass_emulator_stop(PicopassEmulator* emu) {
     if(!emu) return;
 
     FURI_LOG_I(TAG, "Picopass: Stopping emulation");
@@ -447,6 +447,11 @@ static void action_picopass_emulator_stop(PicopassEmulator* emu) {
     nfc_free(emu->nfc);
     free(emu->data);
     free(emu);
+}
+
+const uint8_t* action_picopass_emulator_get_csn(PicopassEmulator* emu) {
+    if(!emu || !emu->data || !emu->data->card_data[PICOPASS_CSN_BLOCK_INDEX].valid) return NULL;
+    return emu->data->card_data[PICOPASS_CSN_BLOCK_INDEX].data;
 }
 
 void action_picopass_tx(void* context, const FuriString* action_path, FuriString* error) {

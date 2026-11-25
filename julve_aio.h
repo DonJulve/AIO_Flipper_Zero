@@ -15,6 +15,10 @@
 
 #include "views/action_menu.h"
 #include "views/subghz_transmitter.h"
+#include "views/nfc_emulate.h"
+#include "views/rfid_emulate.h"
+#include "views/ibutton_emulate.h"
+#include "views/picopass_emulate.h"
 #include "item.h"
 
 #define JULVE_AIO_NAME "Julve AIO"
@@ -42,6 +46,10 @@ typedef struct App {
     ActionMenu* action_menu;
     ButtonMenu* button_menu;
     SubGhzTransmitterView* subghz_transmitter;
+    NfcEmulateView* nfc_emulate_view;
+    RfidEmulateView* rfid_emulate_view;
+    iButtonEmulateView* ibutton_emulate_view;
+    PicopassEmulateView* picopass_emulate_view;
     VariableItemList* vil_settings;
     DialogsApp* dialog;
     Submenu* sub_menu;
@@ -64,6 +72,10 @@ typedef struct App {
     SubGhzTxRx* subghz_txrx;
     void* subghz_scene_state;
     void* ir_remote_state;
+    void* nfc_scene_state;
+    void* rfid_scene_state;
+    void* ibutton_scene_state;
+    void* picopass_scene_state;
 
     struct {
         JulveAioAppLayout layout; // Defaults to Portrait
@@ -75,6 +87,7 @@ typedef struct App {
         uint32_t ibutton_duration; // Defaults to 1000 ms
         uint32_t picopass_duration; // Defaults to 1000 ms (used on tap & as playlist default)
         bool ir_use_ext_module; // Defaults to False
+        bool subghz_use_ext_module; // Defaults to False
         bool show_hidden; // Defaults to False
     } settings;
 

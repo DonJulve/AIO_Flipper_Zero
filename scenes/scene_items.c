@@ -153,6 +153,10 @@ bool scene_items_on_event(void* context, SceneManagerEvent event) {
                         notification_message(app->notifications, &sequence_error);
                     } else {
                         SubGhzTxRx* txrx = subghz_txrx_alloc();
+                        if(app->settings.subghz_use_ext_module) {
+                            subghz_txrx_radio_device_set(
+                                txrx, SubGhzRadioDeviceTypeExternalCC1101);
+                        }
                         bool is_raw = false;
                         if(action_subghz_load_file(
                                txrx,
@@ -183,6 +187,70 @@ bool scene_items_on_event(void* context, SceneManagerEvent event) {
                             notification_message(app->notifications, &sequence_error);
                             subghz_txrx_free(txrx);
                         }
+                    }
+                    furi_string_free(resolved);
+                    furi_string_free(error);
+                } else if(item->type == Item_NFC) {
+                    FuriString* resolved = furi_string_alloc_set(item->path);
+                    FuriString* error = furi_string_alloc();
+                    if(item->is_link) {
+                        action_ql_resolve(app, item->path, resolved, error);
+                    }
+                    if(furi_string_size(error)) {
+                        FURI_LOG_E(TAG, "%s", furi_string_get_cstr(error));
+                        notification_message(app->notifications, &sequence_error);
+                    } else {
+                        furi_string_set(app->temp_str, resolved);
+                        furi_string_set(app->active_item_name, item->name);
+                        scene_manager_next_scene(app->scene_manager, QScene_NfcEmulate);
+                    }
+                    furi_string_free(resolved);
+                    furi_string_free(error);
+                } else if(item->type == Item_RFID) {
+                    FuriString* resolved = furi_string_alloc_set(item->path);
+                    FuriString* error = furi_string_alloc();
+                    if(item->is_link) {
+                        action_ql_resolve(app, item->path, resolved, error);
+                    }
+                    if(furi_string_size(error)) {
+                        FURI_LOG_E(TAG, "%s", furi_string_get_cstr(error));
+                        notification_message(app->notifications, &sequence_error);
+                    } else {
+                        furi_string_set(app->temp_str, resolved);
+                        furi_string_set(app->active_item_name, item->name);
+                        scene_manager_next_scene(app->scene_manager, QScene_RfidEmulate);
+                    }
+                    furi_string_free(resolved);
+                    furi_string_free(error);
+                } else if(item->type == Item_iButton) {
+                    FuriString* resolved = furi_string_alloc_set(item->path);
+                    FuriString* error = furi_string_alloc();
+                    if(item->is_link) {
+                        action_ql_resolve(app, item->path, resolved, error);
+                    }
+                    if(furi_string_size(error)) {
+                        FURI_LOG_E(TAG, "%s", furi_string_get_cstr(error));
+                        notification_message(app->notifications, &sequence_error);
+                    } else {
+                        furi_string_set(app->temp_str, resolved);
+                        furi_string_set(app->active_item_name, item->name);
+                        scene_manager_next_scene(app->scene_manager, QScene_iButtonEmulate);
+                    }
+                    furi_string_free(resolved);
+                    furi_string_free(error);
+                } else if(item->type == Item_Picopass) {
+                    FuriString* resolved = furi_string_alloc_set(item->path);
+                    FuriString* error = furi_string_alloc();
+                    if(item->is_link) {
+                        action_ql_resolve(app, item->path, resolved, error);
+                    }
+                    if(furi_string_size(error)) {
+                        FURI_LOG_E(TAG, "%s", furi_string_get_cstr(error));
+                        notification_message(app->notifications, &sequence_error);
+                    } else {
+                        furi_string_set(app->temp_str, resolved);
+                        furi_string_set(app->active_item_name, item->name);
+                        scene_manager_next_scene(app->scene_manager, QScene_PicopassEmulate);
                     }
                     furi_string_free(resolved);
                     furi_string_free(error);

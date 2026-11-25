@@ -16,11 +16,22 @@ Aplicación Todo-en-Uno de acceso rápido para **Flipper Zero** desarrollada por
     - Importa mandos `.ir` completos en un único archivo (sin dividirlos por botones).
     - Al abrir un archivo `.ir`, renderiza el mando completo con la interfaz de botones vertical del Flipper Zero original; mantener pulsado `OK` repite la señal de forma continua mientras siga presionado.
     - Compatible con módulo IR externo por OTG.
-  - **RFID 125 kHz (`.rfid`)**, **NFC (`.nfc`)**, **iButton (`.ibtn`)** y **Picopass / iClass (`.picopass`)**.
+  - **NFC (`.nfc`)**:
+    - Al presionar `OK`, entra en la pantalla dedicada de emulación continua (`Emulating...`), mostrando el nombre, protocolo/tipo de tarjeta y UID, con el LED azul parpadeando de forma idéntica a la aplicación nativa de NFC del Flipper Zero.
+    - Se detiene inmediatamente y vuelve al listado al pulsar `Back` (o `Exit`).
+  - **RFID 125 kHz (`.rfid`)**:
+    - Al presionar `OK`, entra en la pantalla dedicada de emulación continua (`Emulating...`), mostrando el nombre, tipo de protocolo (p. ej. EM4100, HIDProx) y datos, con el LED azul parpadeando de forma idéntica a la aplicación nativa de RFID del Flipper Zero.
+    - Se detiene inmediatamente y vuelve al listado al pulsar `Back` (o `Exit`).
+  - **iButton (`.ibtn`)**:
+    - Al presionar `OK`, entra en la pantalla dedicada de emulación continua (`Emulating...`), mostrando el nombre de la llave, protocolo (p. ej. Dallas, Cyfral, Metakom) y UID/ID, con el LED azul parpadeando de forma idéntica a la aplicación nativa de iButton del Flipper Zero.
+    - Se detiene inmediatamente y vuelve al listado al pulsar `Back` (o `Exit`).
+  - **Picopass / iClass (`.picopass`)**:
+    - Al presionar `OK`, entra en la pantalla dedicada de emulación continua (`Emulating...`), mostrando el nombre de la tarjeta, tipo y CSN, con el LED azul parpadeando.
+    - Se detiene inmediatamente y vuelve al listado al pulsar `Back` (o `Exit`).
 - **Playlists (`.qpl`)**: encadena múltiples señales secuencialmente con pausas configurables y duraciones personalizadas.
 - **Enlaces simbólicos (`.ql`)**: referencia archivos en cualquier ubicación de la tarjeta SD sin duplicarlos (ideal para mantener sincronizados los contadores de claves rolling code o compartir mandos IR).
 - **Gestión de archivos desde la propia app**: renombrar, borrar, importar archivos completos, importar enlaces y crear grupos/carpetas.
-- **Interfaz personalizable**: modo horizontal o vertical, iconos, cabeceras, duraciones de emisión y visibilidad de archivos ocultos.
+- **Interfaz personalizable**: modo horizontal o vertical, iconos, cabeceras y visibilidad de archivos ocultos.
 
 ---
 
@@ -32,7 +43,11 @@ Aplicación Todo-en-Uno de acceso rápido para **Flipper Zero** desarrollada por
   - Sobre una **carpeta**: entra en el grupo.
   - Sobre un **mando IR (`.ir`)**: abre la pantalla completa del mando con todos sus botones.
   - Sobre una **clave Sub-GHz rolling code (`.sub`)**: abre la pantalla con toda la información de la clave y el botón `Send`.
-  - Sobre cualquier otra **señal** (`.sub` estático/RAW, `.rfid`, `.nfc`, `.ibtn`, `.picopass`) o **playlist (`.qpl`)**: la transmite/ejecuta directamente (el LED parpadea en azul durante la emisión y en rojo si hay error).
+  - Sobre una **tarjeta NFC (`.nfc`)**: abre la pantalla de emulación continua (`Emulating...`) con sus datos y parpadeo de LED hasta pulsar `Back`.
+  - Sobre una **tarjeta RFID (`.rfid`)**: abre la pantalla de emulación continua (`Emulating...`) con sus datos y parpadeo de LED hasta pulsar `Back`.
+  - Sobre una **llave iButton (`.ibtn`)**: abre la pantalla de emulación continua (`Emulating...`) con sus datos y parpadeo de LED hasta pulsar `Back`.
+  - Sobre una **tarjeta Picopass (`.picopass`)**: abre la pantalla de emulación continua (`Emulating...`) con sus datos y parpadeo de LED hasta pulsar `Back`.
+  - Sobre cualquier otra **señal** (`.sub` estático/RAW) o **playlist (`.qpl`)**: la transmite/ejecuta directamente (el LED parpadea en azul durante la emisión y en rojo si hay error).
 - `Back`: vuelve a la carpeta anterior o sale de la aplicación en el nivel raíz.
 - Pulsación larga en `Right`: abre el menú contextual de la carpeta/elemento actual:
   - **Rename**: renombra el archivo manteniendo su extensión (y `.ql` si es un enlace).
@@ -50,6 +65,26 @@ Aplicación Todo-en-Uno de acceso rápido para **Flipper Zero** desarrollada por
 - `OK` (pulsar o mantener): transmite la clave (`Send` / `Sending`), guarda el nuevo contador en el archivo y refresca la información en pantalla al soltar.
 - `Up` / `Down`: desplaza las líneas de información si el protocolo muestra más de 5 líneas.
 - `Back`: regresa a la lista.
+
+### Vista de emulación NFC (`.nfc`)
+- Emulación continua activa en segundo plano con parpadeo azul en el LED de estado.
+- Muestra el nombre, tipo/protocolo de dispositivo y UID en pantalla.
+- `Back` o `Left` (`Exit`): detiene la emulación NFC de forma segura y regresa a la lista.
+
+### Vista de emulación RFID (`.rfid`)
+- Emulación continua activa en segundo plano con parpadeo azul en el LED de estado.
+- Muestra el nombre, tipo/protocolo de llave (p. ej. EM4100, HIDProx) y datos en pantalla.
+- `Back` o `Left` (`Exit`): detiene la emulación RFID de forma segura y regresa a la lista.
+
+### Vista de emulación iButton (`.ibtn`)
+- Emulación continua activa en segundo plano con parpadeo azul en el LED de estado.
+- Muestra el nombre, protocolo (Dallas, Cyfral, Metakom) y UID/ID en pantalla.
+- `Back` o `Left` (`Exit`): detiene la emulación iButton de forma segura y regresa a la lista.
+
+### Vista de emulación Picopass (`.picopass`)
+- Emulación continua activa en segundo plano con parpadeo azul en el LED de estado.
+- Muestra el nombre, tipo (Picopass / iClass) y CSN en pantalla.
+- `Back` o `Left` (`Exit`): detiene la emulación Picopass de forma segura y regresa a la lista.
 
 ---
 
@@ -74,7 +109,7 @@ Un archivo `.qpl` es un fichero de texto plano con una acción por línea:
 - Líneas que comienzan por `#` se tratan como comentarios y las líneas vacías se ignoran.
 - `pause <ms>`: detiene la ejecución durante los milisegundos indicados.
 - Ruta a un archivo de señal (absoluta o relativa a la carpeta de la playlist).
-- Para `.sub`, `.rfid`, `.nfc`, `.ibtn` y `.picopass` se puede indicar opcionalmente una duración en ms tras un espacio (sobrescribe el valor por defecto de los ajustes solo para esa línea).
+- Para `.sub`, `.rfid`, `.nfc`, `.ibtn` y `.picopass` se puede indicar opcionalmente una duración en ms tras un espacio (sobrescribe el valor por defecto solo para esa línea).
 - En playlists, los archivos `.ir` reproducen el primer comando del archivo.
 
 Ejemplo:
@@ -96,7 +131,7 @@ Accesibles desde la opción **Settings** al final del menú raíz (se guardan en
 - **Layout**: `Vert` (vertical) o `Horiz` (horizontal).
 - **Show Icons**: muestra u oculta los iconos por tipo de señal.
 - **Show Headers**: muestra u oculta la cabecera superior para ganar espacio en pantalla.
-- **SubGhz / RFID / NFC / iButton / Picopass Duration**: duración de transmisión/emulación directa (`500 ms` a `10 sec`).
+- **SubGHz Ext Module**: habilita el uso de un módulo externo CC1101 conectado a los pines GPIO (con alimentación OTG 5V automática y detección segura; muestra `[Ext]` en la pantalla de transmisión). Si está deshabilitado o no se detecta el módulo, utiliza la radio interna.
 - **IR Ext Module**: habilita alimentación OTG para módulos IR externos cuando hay uno conectado.
 - **Show Hidden**: muestra u oculta archivos y carpetas cuyo nombre comienza por `.`.
 - **About**: muestra versión e información de la app.

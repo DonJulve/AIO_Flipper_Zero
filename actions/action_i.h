@@ -15,6 +15,13 @@ typedef struct SubGhzNeedSaveContext {
     const FuriString* file_path;
 } SubGhzNeedSaveContext;
 
+typedef struct PicopassEmulator PicopassEmulator;
+
+PicopassEmulator*
+    action_picopass_emulator_start(void* context, const char* path, FuriString* error);
+void action_picopass_emulator_stop(PicopassEmulator* emu);
+const uint8_t* action_picopass_emulator_get_csn(PicopassEmulator* emu);
+
 void action_ql_resolve(
     void* context,
     const FuriString* action_path,

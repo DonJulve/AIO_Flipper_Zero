@@ -17,17 +17,18 @@ void action_subghz_need_save_callback(void* context) {
     flipper_format_delete_key(ff, "Manufacture");
 
     do {
-        if(!storage_simply_remove(
-               savectx->app->storage, furi_string_get_cstr(savectx->file_path))) {
-            FURI_LOG_E(TAG, "Failed to delete subghz file before re-save");
+        storage_simply_remove(
+            savectx->app->storage, furi_string_get_cstr(savectx->file_path));
+        stream_seek(ff_stream, 0, StreamOffsetFromStart);
+        if(!stream_save_to_file(
+               ff_stream,
+               savectx->app->storage,
+               furi_string_get_cstr(savectx->file_path),
+               FSOM_CREATE_ALWAYS)) {
+            FURI_LOG_E(
+                TAG, "Failed to save subghz file: %s", furi_string_get_cstr(savectx->file_path));
             break;
         }
-        stream_seek(ff_stream, 0, StreamOffsetFromStart);
-        stream_save_to_file(
-            ff_stream,
-            savectx->app->storage,
-            furi_string_get_cstr(savectx->file_path),
-            FSOM_CREATE_ALWAYS);
         if(storage_common_stat(
                savectx->app->storage, furi_string_get_cstr(savectx->file_path), NULL) != FSE_OK) {
             FURI_LOG_E(TAG, "Error verifying new subghz file after re-save");
@@ -207,6 +208,9 @@ void action_subghz_tx(void* context, const FuriString* action_path, FuriString* 
     const char* file_name = furi_string_get_cstr(action_path);
 
     SubGhzTxRx* txrx = subghz_txrx_alloc();
+    if(app->settings.subghz_use_ext_module) {
+        subghz_txrx_radio_device_set(txrx, SubGhzRadioDeviceTypeExternalCC1101);
+    }
     bool is_raw = false;
 
     FURI_LOG_I(TAG, "SUBGHZ: Action starting...");
